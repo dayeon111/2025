@@ -1,82 +1,51 @@
 import streamlit as st
-import random
 
-# -----------------------------
-# 영화 데이터 (기분별 추천)
-# -----------------------------
-movies = {
-    "😊 기쁠 때": [
-        {"title": "라라랜드 🎶✨", 
-         "desc": "반짝이는 음악과 달콤한 사랑 이야기 💛 기분이 더 업업↗️",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/a/ab/La_La_Land.png",
-         "trailer": "https://www.youtube.com/watch?v=0pdqf4P9MB8"},
-        {"title": "인턴 👔💼", 
-         "desc": "따뜻하고 긍정적인 분위기로 마음이 포근해져요 ☕🌸",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/c/c9/The_Intern_Poster.jpg",
-         "trailer": "https://www.youtube.com/watch?v=ZU3Xban0Y6A"},
-    ],
-    "😢 슬플 때": [
-        {"title": "인사이드 아웃 🌈😭", 
-         "desc": "눈물 나지만 따뜻한 감동 🍭 감정을 이해할 수 있어요 💕",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/0/0a/Inside_Out_%282015_film%29_poster.jpg",
-         "trailer": "https://www.youtube.com/watch?v=seMwpP0yeu4"},
-        {"title": "세상의 모든 계절 🍂👨‍👩‍👧", 
-         "desc": "인생의 희노애락을 담은 감동적인 가족 이야기 💌",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/f/f5/Another_Year.jpg",
-         "trailer": "https://www.youtube.com/watch?v=yYbV5pFzLrE"},
-    ],
-    "😡 화날 때": [
-        {"title": "분노의 질주 🚗💨🔥", 
-         "desc": "시원한 액션으로 스트레스 팡팡! 💥",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/7/7e/Fast_%26_Furious_Poster.jpg",
-         "trailer": "https://www.youtube.com/watch?v=2TAOizOnNPo"},
-        {"title": "킬 빌 ⚔️🖤", 
-         "desc": "강렬한 액션으로 화난 마음을 날려버리세요! 💣",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/c/cf/Kill_Bill_Volume_1.png",
-         "trailer": "https://www.youtube.com/watch?v=7kSuas6mRpk"},
-    ],
-    "😴 지칠 때": [
-        {"title": "월터의 상상은 현실이 된다 🌍✨", 
-         "desc": "모험과 여행으로 지친 마음에 힐링을 💫🍀",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/e/e4/The_Secret_Life_of_Walter_Mitty_poster.jpg",
-         "trailer": "https://www.youtube.com/watch?v=QD6cy4PBQPI"},
-        {"title": "먹고 기도하고 사랑하라 🍝🧘‍♀️💖", 
-         "desc": "여행과 자기 치유, 마음의 힐링 타임 🎀",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/7/7f/Eat_pray_love_ver2.jpg",
-         "trailer": "https://www.youtube.com/watch?v=mjay5vgIwt4"},
-    ],
-    "💘 사랑하고 싶을 때": [
-        {"title": "노트북 📖💞", 
-         "desc": "달달한 사랑 이야기에 푹 빠져보세요 💋",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg",
-         "trailer": "https://www.youtube.com/watch?v=FC6biTjEyZw"},
-        {"title": "어바웃 타임 ⏰❤️", 
-         "desc": "시간여행 + 로맨스 = 완벽 조합 🥰",
-         "poster": "https://upload.wikimedia.org/wikipedia/en/8/85/About_Time_poster.jpg",
-         "trailer": "https://www.youtube.com/watch?v=T7A810duHvw"},
-    ],
-}
+# 페이지 기본 설정
+st.set_page_config(page_title="🎬 기분별 영화 추천", page_icon="🍿", layout="wide")
 
-# -----------------------------
-# Streamlit UI
-# -----------------------------
-st.set_page_config(page_title="기분별 영화 추천 🎬🍿", page_icon="🍿", layout="wide")
-
-st.markdown("<h1 style='text-align: center;'>✨ 오늘 내 기분에 맞는 영화는? ✨</h1>", unsafe_allow_html=True)
-st.write("👉 지금 기분을 선택하면 그에 맞는 영화를 랜덤으로 추천해드려요 🎁")
-
-# 푸린 이미지 (상단에 귀엽게 배치 💖)
-st.image("https://archives.bulbagarden.net/media/upload/thumb/f/fb/039Jigglypuff.png/250px-039Jigglypuff.png", 
-         caption="귀여운 푸린이랑 함께하는 영화 추천 🍬🎤", width=180)
+st.title("🍿 기분별 영화 추천 사이트 🎬")
+st.write("✨ 지금 기분에 맞는 영화를 추천해드려요! ✨")
 
 # 기분 선택
-mood = st.radio("🌈 지금 내 기분은...?", list(movies.keys()))
+mood = st.selectbox(
+    "지금 기분을 골라주세요 💖",
+    ["😊 행복해!", "😢 슬퍼...", "🤔 생각 많아", "😡 화나!", "😴 그냥 쉬고 싶어"]
+)
 
-if mood:
-    choice = random.choice(movies[mood])  # 랜덤 영화 추천
-    
-    st.markdown(f"### 🎉 오늘의 추천 영화는... **{choice['title']}** 🎉")
-    st.image(choice["poster"], width=250)
-    st.write(f"💡 {choice['desc']}")
-    st.video(choice["trailer"])
-    st.success("🍀 즐거운 영화 감상 되세요! 🍀")
+# 영화 데이터 (제목 + 이미지 URL)
+movies = {
+    "😊 행복해!": [
+        {"title": "인사이드 아웃", "poster": "https://upload.wikimedia.org/wikipedia/ko/6/64/Inside_Out_poster.jpg"},
+        {"title": "라라랜드", "poster": "https://upload.wikimedia.org/wikipedia/ko/0/00/La_La_Land.png"},
+        {"title": "주토피아", "poster": "https://upload.wikimedia.org/wikipedia/ko/e/e6/Zootopia.jpg"}
+    ],
+    "😢 슬퍼...": [
+        {"title": "너의 이름은", "poster": "https://upload.wikimedia.org/wikipedia/ko/c/c6/Your_Name_poster.jpg"},
+        {"title": "미 비포 유", "poster": "https://upload.wikimedia.org/wikipedia/en/7/72/Me_Before_You_%28film%29.jpg"},
+        {"title": "월-E", "poster": "https://upload.wikimedia.org/wikipedia/ko/3/3c/WALL-E_poster.jpg"}
+    ],
+    "🤔 생각 많아": [
+        {"title": "인셉션", "poster": "https://upload.wikimedia.org/wikipedia/ko/0/0a/Inception_poster.jpg"},
+        {"title": "인터스텔라", "poster": "https://upload.wikimedia.org/wikipedia/ko/b/b4/인터스텔라.jpg"},
+        {"title": "이터널 선샤인", "poster": "https://upload.wikimedia.org/wikipedia/en/e/e6/Eternal_Sunshine_of_the_Spotless_Mind.png"}
+    ],
+    "😡 화나!": [
+        {"title": "매드맥스: 분노의 도로", "poster": "https://upload.wikimedia.org/wikipedia/ko/3/3c/Mad_Max_Fury_Road.jpg"},
+        {"title": "킬 빌", "poster": "https://upload.wikimedia.org/wikipedia/ko/1/1e/Kill_Bill_Volume_1_poster.jpg"},
+        {"title": "조커", "poster": "https://upload.wikimedia.org/wikipedia/ko/4/4f/Joker_2019.jpg"}
+    ],
+    "😴 그냥 쉬고 싶어": [
+        {"title": "센과 치히로의 행방불명", "poster": "https://upload.wikimedia.org/wikipedia/ko/7/7e/Spirited_Away_poster.jpg"},
+        {"title": "코코", "poster": "https://upload.wikimedia.org/wikipedia/ko/2/28/Coco_poster.jpg"},
+        {"title": "하울의 움직이는 성", "poster": "https://upload.wikimedia.org/wikipedia/ko/a/a0/Howls_Moving_Castle.jpg"}
+    ]
+}
+
+# 선택한 기분에 맞는 영화 보여주기
+st.subheader(f"{mood} 기분일 때 추천 영화 🎥")
+
+cols = st.columns(3)
+for idx, movie in enumerate(movies[mood]):
+    with cols[idx % 3]:
+        st.image(movie["poster"], caption=movie["title"], use_column_width=True)
+
