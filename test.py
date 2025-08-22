@@ -1,51 +1,47 @@
 import streamlit as st
 
-# 페이지 기본 설정
-st.set_page_config(page_title="🎬 기분별 영화 추천", page_icon="🍿", layout="wide")
+st.set_page_config(page_title="🎬 기분별 영화 추천", page_icon="🎥", layout="centered")
 
-st.title("🍿 기분별 영화 추천 사이트 🎬")
-st.write("✨ 지금 기분에 맞는 영화를 추천해드려요! ✨")
+st.title("🎬 오늘의 기분별 영화 추천 🍿")
 
 # 기분 선택
 mood = st.selectbox(
-    "지금 기분을 골라주세요 💖",
-    ["😊 행복해!", "😢 슬퍼...", "🤔 생각 많아", "😡 화나!", "😴 그냥 쉬고 싶어"]
+    "오늘 기분은 어때? 😆😢😡😴😍😎",
+    ["행복해 😆", "슬퍼 😢", "화나 😡", "피곤해 😴", "설레 😍", "차분해 😎"]
 )
 
-# 영화 데이터 (제목 + 이미지 URL)
+# 기분별 영화 데이터
 movies = {
-    "😊 행복해!": [
-        {"title": "인사이드 아웃", "poster": "https://upload.wikimedia.org/wikipedia/ko/6/64/Inside_Out_poster.jpg"},
-        {"title": "라라랜드", "poster": "https://upload.wikimedia.org/wikipedia/ko/0/00/La_La_Land.png"},
-        {"title": "주토피아", "poster": "https://upload.wikimedia.org/wikipedia/ko/e/e6/Zootopia.jpg"}
+    "행복해 😆": [
+        {"title": "인사이드 아웃", "poster": "https://upload.wikimedia.org/wikipedia/ko/0/05/Inside_Out_%28Korean_poster%29.jpg"},
+        {"title": "라라랜드", "poster": "https://upload.wikimedia.org/wikipedia/ko/f/fd/La_La_Land.png"},
     ],
-    "😢 슬퍼...": [
-        {"title": "너의 이름은", "poster": "https://upload.wikimedia.org/wikipedia/ko/c/c6/Your_Name_poster.jpg"},
-        {"title": "미 비포 유", "poster": "https://upload.wikimedia.org/wikipedia/en/7/72/Me_Before_You_%28film%29.jpg"},
-        {"title": "월-E", "poster": "https://upload.wikimedia.org/wikipedia/ko/3/3c/WALL-E_poster.jpg"}
+    "슬퍼 😢": [
+        {"title": "빌리 엘리어트", "poster": "https://upload.wikimedia.org/wikipedia/ko/5/5e/Billy_Elliot_poster.jpg"},
+        {"title": "마더", "poster": "https://upload.wikimedia.org/wikipedia/ko/1/1e/Mother_2009.jpg"},
     ],
-    "🤔 생각 많아": [
-        {"title": "인셉션", "poster": "https://upload.wikimedia.org/wikipedia/ko/0/0a/Inception_poster.jpg"},
-        {"title": "인터스텔라", "poster": "https://upload.wikimedia.org/wikipedia/ko/b/b4/인터스텔라.jpg"},
-        {"title": "이터널 선샤인", "poster": "https://upload.wikimedia.org/wikipedia/en/e/e6/Eternal_Sunshine_of_the_Spotless_Mind.png"}
+    "화나 😡": [
+        {"title": "조커", "poster": "https://upload.wikimedia.org/wikipedia/ko/e/e5/Joker_%28film%29_poster.jpg"},
+        {"title": "매드맥스: 분노의 도로", "poster": "https://upload.wikimedia.org/wikipedia/ko/0/09/Mad_Max_Fury_Road_poster.jpg"},
     ],
-    "😡 화나!": [
-        {"title": "매드맥스: 분노의 도로", "poster": "https://upload.wikimedia.org/wikipedia/ko/3/3c/Mad_Max_Fury_Road.jpg"},
-        {"title": "킬 빌", "poster": "https://upload.wikimedia.org/wikipedia/ko/1/1e/Kill_Bill_Volume_1_poster.jpg"},
-        {"title": "조커", "poster": "https://upload.wikimedia.org/wikipedia/ko/4/4f/Joker_2019.jpg"}
+    "피곤해 😴": [
+        {"title": "월-E", "poster": "https://upload.wikimedia.org/wikipedia/ko/c/c1/WALL-E_poster.jpg"},
+        {"title": "코코", "poster": "https://upload.wikimedia.org/wikipedia/ko/8/88/Coco_%282017%29.jpg"},
     ],
-    "😴 그냥 쉬고 싶어": [
-        {"title": "센과 치히로의 행방불명", "poster": "https://upload.wikimedia.org/wikipedia/ko/7/7e/Spirited_Away_poster.jpg"},
-        {"title": "코코", "poster": "https://upload.wikimedia.org/wikipedia/ko/2/28/Coco_poster.jpg"},
-        {"title": "하울의 움직이는 성", "poster": "https://upload.wikimedia.org/wikipedia/ko/a/a0/Howls_Moving_Castle.jpg"}
+    "설레 😍": [
+        {"title": "어바웃 타임", "poster": "https://upload.wikimedia.org/wikipedia/ko/3/3c/About_Time_poster.jpg"},
+        {"title": "노팅 힐", "poster": "https://upload.wikimedia.org/wikipedia/ko/3/38/Notting_Hill_poster.jpg"},
+    ],
+    "차분해 😎": [
+        {"title": "인터스텔라", "poster": "https://upload.wikimedia.org/wikipedia/ko/b/bd/인터스텔라_포스터.jpg"},
+        {"title": "비포 선라이즈", "poster": "https://upload.wikimedia.org/wikipedia/ko/2/2c/Before_Sunrise.jpg"},
     ]
 }
 
-# 선택한 기분에 맞는 영화 보여주기
-st.subheader(f"{mood} 기분일 때 추천 영화 🎥")
+# 선택한 기분에 맞는 영화 추천
+st.subheader(f"{mood} 기분엔 이런 영화 어때? 🎥")
 
-cols = st.columns(3)
-for idx, movie in enumerate(movies[mood]):
-    with cols[idx % 3]:
-        st.image(movie["poster"], caption=movie["title"], use_column_width=True)
+for movie in movies[mood]:
+    st.image(movie["poster"], caption=movie["title"], width=250)
+
 
